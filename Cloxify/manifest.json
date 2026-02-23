@@ -1,0 +1,19 @@
+{
+  "name": "Cloxify",
+  "description": "Cronometra quanto tempo uma aba está ativa.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Tab Timer"
+  },
+  "host_permissions": [
+  "https://*.supabase.co/*"
+]
+}
