@@ -1,0 +1,15 @@
+.Horas{
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: #00000015;
+    padding: 0.5rem 1rem;
+    background-color: green;
+}
+
+.Graph{
+    color: antiquewhite;
+    text-transform: capitalize;
+    font-weight: 400;
+    display: flex;
+    gap: 1rem;
+}
