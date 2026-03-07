@@ -12,7 +12,7 @@ function getTotalSeconds(domains) {
   return domains.reduce((acc, d) => acc + d.seconds, 0)
 }
 
-function UserRow({ user, maxSeconds, onClick }) {
+function UserRow({ user, cor, maxSeconds, onClick }) {
 
   const totalSeconds = getTotalSeconds(user.domains)
 
@@ -22,11 +22,11 @@ function UserRow({ user, maxSeconds, onClick }) {
     <div className="user-row" onClick={() => onClick(user)}>
 
       <div className="user-avatar">
-        {user.user_id.slice(0,2).toUpperCase()}
+        {user.name.slice(0,2).toUpperCase()}
       </div>
 
       <div className="user-name">
-        {user.user_id}
+        {user.name}
       </div>
 
       <div className="user-time">
@@ -36,7 +36,7 @@ function UserRow({ user, maxSeconds, onClick }) {
       <div className="progress-bar">
         <div
           className="progress-fill"
-          style={{ width: `${percentage}%` }}
+          style={{ width: `${percentage}%`, backgroundColor: cor }}
         />
       </div>
 

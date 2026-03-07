@@ -20,16 +20,19 @@ function Corpo() {
     loadData();
   }, []);
 
-  async function loadData() {
-    const result = await getGroupedUsage();
-    setUsers(result);
+async function loadData() {
+  const result = await getGroupedUsage();
 
-    const max = Math.max(
-      ...result.map((user) => getTotalSeconds(user.domains)),
-    );
+  console.log("RESULTADO RPC:", result); // 👈 adicionar
 
-    setMaxSeconds(max);
-  }
+  setUsers(result);
+
+  const max = Math.max(
+    ...result.map((user) => getTotalSeconds(user.domains)),
+  );
+
+  setMaxSeconds(max);
+}
 
   return (
     <div className="app-container">
@@ -38,8 +41,9 @@ function Corpo() {
       <div className="user-table">
         {users.map((user) => (
           <UserRow
-            key={user.user_id}
+            key={user.name}
             user={user}
+            cor={user.color}
             maxSeconds={maxSeconds}
             onClick={setSelectedUser}
           />

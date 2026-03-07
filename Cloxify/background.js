@@ -162,7 +162,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
 
 })
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+chrome.tabs.onUpdated.addListener((changeInfo, tab) => {
 
   if (changeInfo.status !== "complete") return
 

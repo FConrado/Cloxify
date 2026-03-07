@@ -8,7 +8,7 @@ function Header(){
                 <img src={nexilogo} alt="" />
                 <h2>Cloxify</h2>
             </div>
-            <h3>Workspace de Junior Costa</h3>
+            <h3>Nexi's Clockify - A GragasDEV Product</h3>
         </header>
     )
 }

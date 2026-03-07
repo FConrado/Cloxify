@@ -9,8 +9,7 @@ import {
 } from "recharts";
 
 function UsageChart({ data, users }) {
-  const colors = ["#f4b400", "#4285F4", "#34A853", "#EA4335", "#9C27B0"];
-
+  
   return (
     <ResponsiveContainer width="100%" height={350}>
       <BarChart data={data}>
@@ -30,12 +29,12 @@ function UsageChart({ data, users }) {
 
         <Tooltip formatter={(value) => `${value} horas`} />
 
-        {users.map((user, index) => (
+        {users.map((user) => (
           <Bar
-            key={user.user_id}
-            dataKey={user.user_id}
+            key={user.name}
+            dataKey={user.name}
             stackId="a"
-            fill={colors[index % colors.length]}
+            fill={user.color}
           />
         ))}
       </BarChart>

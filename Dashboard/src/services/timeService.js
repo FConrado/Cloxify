@@ -9,5 +9,27 @@ export async function getGroupedUsage() {
     throw error
   }
 
-  return data
+  const users = {}
+
+  data.forEach(row => {
+
+    if (!users[row.name]) {
+      users[row.name] = {
+        user_id: row.name,
+        name: row.name,
+        color: row.color,
+        domains: []
+      }
+    }
+
+    users[row.name].domains.push({
+      day: row.day,
+      domain: "total",
+      seconds: row.total_seconds
+    })
+
+  })
+
+  return Object.values(users)
+
 }
