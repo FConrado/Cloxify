@@ -1,27 +1,30 @@
 export function buildChartData(users) {
 
-  const daily = {}
+  const days = {}
 
   users.forEach(user => {
 
-    user.domains.forEach(domain => {
+    user.domains.forEach(entry => {
 
-      const date = new Date(domain.created_at)
-        .toISOString()
-        .split("T")[0]
+      const day = entry.day
 
-      if (!daily[date]) {
-        daily[date] = { date }
+      if (!day) return
+
+      if (!days[day]) {
+        days[day] = { day }
       }
 
-      if (!daily[date][user.user_id]) {
-        daily[date][user.user_id] = 0
+      if (!days[day][user.user_id]) {
+        days[day][user.user_id] = 0
       }
 
-      daily[date][user.user_id] += domain.seconds
+      days[day][user.user_id] += Number((entry.seconds / 3600).toFixed(2))
+
     })
 
   })
 
-  return Object.values(daily)
+  return Object.values(days).sort((a,b) =>
+    new Date(a.day) - new Date(b.day)
+  )
 }
