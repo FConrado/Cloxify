@@ -13,6 +13,7 @@
 
   --verde: #09bc8a;
   --preto: #100c0d;
+  --cinza: #191A1E;
 }
 
 a {
@@ -25,8 +26,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--preto);

@@ -1,58 +1,53 @@
-import Horas from "./Horas"
-import "./Corpo.css"
-import { useState } from "react"
-import { getTimeByUser } from "../services/timeService"
+import { useEffect, useState } from "react";
+import { getGroupedUsage } from "../services/timeService";
+import UserRow from "./UserRow";
+import UserModal from "./UserModal";
+import UsageChart from "./Grafico";
+import { buildChartData } from "../services/chartData";
+import "./Corpo.css";
+
+function getTotalSeconds(domains) {
+  return domains.reduce((acc, d) => acc + d.seconds, 0);
+}
 
 function Corpo() {
+  const [users, setUsers] = useState([]);
+  const [maxSeconds, setMaxSeconds] = useState(0);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const chartData = buildChartData(users);
 
-    const [uuid, setUuid] = useState("")
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    loadData();
+  }, []);
 
-  async function handleLoad() {
-    if (!uuid) return
+  async function loadData() {
+    const result = await getGroupedUsage();
+    setUsers(result);
 
-    setLoading(true)
+    const max = Math.max(
+      ...result.map((user) => getTotalSeconds(user.domains)),
+    );
 
-    try {
-      const result = await getTimeByUser(uuid)
-      setData(result)
-    } catch (err) {
-      alert("Erro ao buscar dados")
-    }
-
-    setLoading(false)
+    setMaxSeconds(max);
   }
+
   return (
-    <div className="Corpo">
-    <div >
-        <div>
-             <input
-        type="text"
-        placeholder="Busque o nome do usuário"
-        value={uuid}
-        onChange={(e) => setUuid(e.target.value)}
-        style={{ width: "400px", marginRight: "10px" }}
-      />
+    <div className="app-container">
+      <UsageChart data={chartData} users={users} />
 
-      <button onClick={handleLoad}>
-        Buscar horas
-      </button>
-
-      {loading && <p>Carregando...</p>}
-
-      <ul>
-        {data.map((item) => (
-          <li key={item.id}>
-            {item.domain} — {item.seconds} segundos
-          </li>
+      <div className="user-table">
+        {users.map((user) => (
+          <UserRow
+            key={user.user_id}
+            user={user}
+            maxSeconds={maxSeconds}
+            onClick={setSelectedUser}
+          />
         ))}
-      </ul>
-        </div>
+      </div>
+      <UserModal user={selectedUser} onClose={() => setSelectedUser(null)} />
     </div>
-    <Horas></Horas>
-    </div>
-  )
-}  
+  );
+}
 
-export default Corpo
+export default Corpo;

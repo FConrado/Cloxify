@@ -1,14 +1,11 @@
 import { supabase } from "../lib/supabase"
 
-export async function getTimeByUser(userId) {
-  const { data, error } = await supabase
-    .from("tab_time")
-    .select("*")
-    .eq("user_id", userId)
-    .order("seconds", { ascending: false })
+export async function getGroupedUsage() {
+
+  const { data, error } = await supabase.rpc("get_usage_grouped")
 
   if (error) {
-    console.error("Erro ao buscar dados:", error)
+    console.error(error)
     throw error
   }
 
