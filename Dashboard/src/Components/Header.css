@@ -1,4 +1,4 @@
-.header{
+.header {
   top: 0;
   z-index: 1000;
   font-family: 'SedraMedium', sans-serif;
@@ -6,16 +6,16 @@
   display: flex;
   background-color: var(--preto);
   align-items: center;
-  justify-content: left;
-  box-shadow: 0, 200px, 100px, var(--cinza);
+  justify-content: space-between;
+  border-bottom: 1px solid var(--cinza);
+  background-color: var(--preto);
   font-style: italic;
-  font-size: 1.25rem; 
+  font-size: 1.25rem;
   height: 4rem;
   color: white;
 }
 
 .logo {
-  height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
@@ -23,13 +23,20 @@
   align-items: center;
   gap: 1rem;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+
+.logo img {
+  height: 2.5rem;
 }
 
-.logo img{
-    height: 2.5rem;
+.conta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  right: auto;
+  padding-left: 2rem;
 }

@@ -1,5 +1,6 @@
 import "./UserModal.css"
 
+
 function formatTime(seconds) {
   const h = Math.floor(seconds / 3600)
   const m = Math.floor((seconds % 3600) / 60)
@@ -19,7 +20,7 @@ function UserModal({ user, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
 
-        <h2>{user.user_id}</h2>
+        <h2>{user.name}</h2>
 
         <ul className="domain-list">
           {user.domains.map((domain, i) => (

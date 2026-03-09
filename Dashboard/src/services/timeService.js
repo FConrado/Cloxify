@@ -1,8 +1,14 @@
 import { supabase } from "../lib/supabase"
 
-export async function getGroupedUsage() {
+export async function getGroupedUsage(start, end) {
 
-  const { data, error } = await supabase.rpc("get_usage_grouped")
+   const { data, error } = await supabase.rpc(
+    "get_usage_grouped",
+    {
+      p_start: start,
+      p_end: end
+    }
+  )
 
   if (error) {
     console.error(error)
@@ -15,7 +21,7 @@ export async function getGroupedUsage() {
 
     if (!users[row.name]) {
       users[row.name] = {
-        user_id: row.name,
+        user_id: row.user_id,
         name: row.name,
         color: row.color,
         domains: []
@@ -32,4 +38,23 @@ export async function getGroupedUsage() {
 
   return Object.values(users)
 
+}
+
+export async function getUserDomainsInPeriod(userId, start, end) {
+
+  const { data, error } = await supabase.rpc(
+    "get_user_domains_in_period",
+    {
+      p_user: userId,
+      p_start: start,
+      p_end: end
+    }
+  )
+
+  if (error) {
+    console.error(error)
+    throw error
+  }
+
+  return data
 }

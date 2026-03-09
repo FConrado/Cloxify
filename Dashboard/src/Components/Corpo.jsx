@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getGroupedUsage } from "../services/timeService";
+import { getGroupedUsage, getUserDomainsInPeriod } from "../services/timeService";
 import UserRow from "./UserRow";
 import UserModal from "./UserModal";
 import UsageChart from "./Grafico";
@@ -16,38 +16,66 @@ function Corpo() {
   const [selectedUser, setSelectedUser] = useState(null);
   const chartData = buildChartData(users);
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  const [startDate, setStartDate] = useState( new Date(Date.now() - 7 * 86400000).toLocaleDateString("en-CA"));
+  const [endDate, setEndDate] = useState(new Date().toLocaleDateString("en-CA"));
 
-async function loadData() {
-  const result = await getGroupedUsage();
+ useEffect(() => {
 
-  console.log("RESULTADO RPC:", result); // 👈 adicionar
+  if (!startDate || !endDate) return
 
-  setUsers(result);
+  loadData()
 
-  const max = Math.max(
-    ...result.map((user) => getTotalSeconds(user.domains)),
-  );
+}, [startDate, endDate])
 
-  setMaxSeconds(max);
-}
+  async function loadData() {
+
+    if (!startDate || !endDate) return
+
+    const result = await getGroupedUsage(startDate, endDate)
+    setUsers(result);
+
+    const max = Math.max(
+      ...result.map((user) => getTotalSeconds(user.domains)),
+    );
+
+    setMaxSeconds(max);
+  }
+
+  async function openUserModal(user) {
+
+    const domains = await getUserDomainsInPeriod(user.user_id, startDate, endDate)
+
+    setSelectedUser({
+      ...user,
+      domains
+    })
+  }
 
   return (
     <div className="app-container">
       <UsageChart data={chartData} users={users} />
-
-      <div className="user-table">
-        {users.map((user) => (
-          <UserRow
-            key={user.name}
-            user={user}
-            cor={user.color}
-            maxSeconds={maxSeconds}
-            onClick={setSelectedUser}
-          />
-        ))}
+      <div className="Linhas">
+        <div className="dataPicker">
+          <p>De: </p>
+          <input type="date"
+            value={startDate || ""}
+            onChange={(e) => setStartDate(e.target.value)} />
+          <p>Até: </p>
+          <input type="date"
+            value={endDate || ""}
+            onChange={(e) => setEndDate(e.target.value)} />
+        </div>
+        <div className="user-table">
+          {users.map((user) => (
+            <UserRow
+              key={user.name}
+              user={user}
+              cor={user.color}
+              maxSeconds={maxSeconds}
+              onClick={openUserModal}
+            />
+          ))}
+        </div>
       </div>
       <UserModal user={selectedUser} onClose={() => setSelectedUser(null)} />
     </div>

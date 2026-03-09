@@ -16,23 +16,26 @@ function UsageChart({ data, users }) {
         <CartesianGrid strokeDasharray="3 3" />
 
         <XAxis
-          dataKey="day"
-          tickFormatter={(day) =>
-            new Date(day).toLocaleDateString("pt-BR", {
-              weekday: "short",
-              day: "2-digit",
-            })
-          }
-        />
+  dataKey="day"
+  tickFormatter={(day) => {
+    const [year, month, date] = day.split("-")
+    const d = new Date(year, month - 1, date)
+
+    return d.toLocaleDateString("pt-BR", {
+      weekday: "short",
+      day: "2-digit",
+    })
+  }}
+/>
 
         <YAxis />
 
-        <Tooltip formatter={(value) => `${value} horas`} />
+        <Tooltip formatter={(value) => `${value} horas`} cursor={{fill: '#09bc890a'}}/>
 
         {users.map((user) => (
           <Bar
             key={user.name}
-            dataKey={user.name}
+            dataKey={user.user_id}
             stackId="a"
             fill={user.color}
           />

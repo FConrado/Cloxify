@@ -24,7 +24,7 @@ export function buildChartData(users) {
 
   })
 
-  return Object.values(days).sort((a,b) =>
-    new Date(a.day) - new Date(b.day)
+  return Object.values(days).sort((a, b) =>
+    a.day.localeCompare(b.day)
   )
 }

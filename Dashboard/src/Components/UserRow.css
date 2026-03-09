@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   padding: 16px;
-  border-bottom: 1px solid #eee;
+  color: whitesmoke;
+  background-color: var(--cinza);
   gap: 20px;
   cursor: pointer;
 }
@@ -15,7 +16,7 @@
   width: 40px;
   height: 40px;
   border-radius: 8px;
-  background: #4CAF50;
+  background: var(--verde);
   color: white;
   display: flex;
   align-items: center;
