@@ -36,7 +36,7 @@ function UserRow({ user, cor, maxSeconds, onClick }) {
       <div className="progress-bar">
         <div
           className="progress-fill"
-          style={{ width: `${percentage}%`, backgroundColor: cor }}
+          style={{ width: `${percentage}%`, backgroundColor: cor, boxShadow: `0 0 8px 0 ${cor}` }}
         />
       </div>
 

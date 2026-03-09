@@ -18,6 +18,9 @@
   border: 1px solid var(--preto);
   border-radius: 6px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .dataPicker {
