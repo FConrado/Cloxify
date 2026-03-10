@@ -1,7 +1,9 @@
 import "./Header.css"
 import nexilogo from "../assets/nexilogo.svg"
 
-function Header() {
+function Header({ user }) {
+    console.log(user)
+
     return (
         <header className="header">
             <div className="logo">
@@ -10,8 +12,8 @@ function Header() {
                 <h3>Nexi's Clockify</h3>
             </div>
             <div className="conta">
-                <p>Felipe Conrado</p>
-                <div className="user-avatar">
+                <p>{user}</p>
+                <div className="user-avatar" style={{ backgroundColor: "var(--verde)" }}>
                 </div>
             </div>
         </header>

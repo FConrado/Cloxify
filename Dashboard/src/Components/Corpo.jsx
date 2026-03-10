@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getGroupedUsage, getUserDomainsInPeriod } from "../services/timeService";
+import { getGroupedUsage, getUserDomainsInPeriod, getUser } from "../services/timeService";
 import UserRow from "./UserRow";
 import UserModal from "./UserModal";
 import UsageChart from "./Grafico";
@@ -20,10 +20,12 @@ function Corpo() {
   const [endDate, setEndDate] = useState(new Date().toLocaleDateString("en-CA"));
 
  useEffect(() => {
+  
 
   if (!startDate || !endDate) return
 
   loadData()
+
 
 }, [startDate, endDate])
 
@@ -33,7 +35,6 @@ function Corpo() {
 
     const result = await getGroupedUsage(startDate, endDate)
     setUsers(result);
-
     const max = Math.max(
       ...result.map((user) => getTotalSeconds(user.domains)),
     );

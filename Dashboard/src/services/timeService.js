@@ -58,3 +58,13 @@ export async function getUserDomainsInPeriod(userId, start, end) {
 
   return data
 }
+
+export async function getUser(){
+  const { data, error } = await supabase.rpc("get_current_user")
+  if (error) {
+    console.error(error)
+    throw error
+  }
+
+  return data
+}
